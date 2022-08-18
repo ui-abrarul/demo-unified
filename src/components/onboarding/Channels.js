@@ -1,34 +1,28 @@
 import React, { useState } from 'react'
-import { Card, FlexChild, FlexLayout, TextStyles, Modal, FormElement, TextField } from '@cedcommerce/ounce-ui'
+import { Card, FlexChild, FlexLayout, TextStyles, Modal,FormElement,TextField } from '@cedcommerce/ounce-ui'
 
 
 const Channels = (props) => {
 
     const [connectModal, setConnectModal] = useState(false)
-    const [value, setValue] = useState([])
+    const [formData,setFormData] = useState({
+        firstName:"",
+        lastName:""
+    })
+    
+    console.log(formData)
 
-    const handleChange = (data, index) => {
-        const temp = [...value];
-        temp[index] = data;
-        setValue(temp);
+    const handleChange = (e, name) =>{
+        name=="fname" && setFormData({...formData,firstName:e})
+        name=="lname" && setFormData({...formData,lastName:e})
+        // setFormData(formData => {
+        //     return{
+        //         ...formData,
+        //         e
+        //     }
+        // })
     }
-    const arr = [
-        {
-            type:"text",
-            place:"First Name",
-            name: "First Name"
-        },
-        {
-            type:"password",
-            place:"Last Name",
-            name: "Last Name"
-        },
-        {
-            type:"number",
-            place:"Count",
-            name: "Count"
-        }
-    ]
+
     return (
         <>
             <Card
@@ -100,8 +94,8 @@ const Channels = (props) => {
                 primaryAction={{
                     content: 'Proceed',
                     loading: false,
-                    onClick: function noRefCheck() { }
-                }}
+                    onClick: function noRefCheck() {}
+                  }}
                 secondaryAction={{
                     content: 'Close',
                     loading: false,
@@ -109,22 +103,20 @@ const Channels = (props) => {
                 }}
             >
                 <FlexLayout direction='vertical' spacing='loose'>
-                    <TextStyles content="Enter Account Details" fontweight='normal' type='SubHeading' />
-                    <FormElement
-                    >
-                        {arr.map((items, index) => {
-                            return <>
-                                <TextField
-                                    type={items.type}
-                                    placeHolder={items.place}
-                                    name={items.name}
-                                    value={value[index]}
-                                    onChange={(data) => handleChange(data, index)}
-                                />
-                            </>
-                        })}
-
-                    </FormElement>
+                <TextStyles content="Enter Account Details" fontweight='normal' type='SubHeading' />
+                <FormElement
+                >
+                    <TextField
+                        name="first Name"
+                        onChange={(e)=>handleChange(e,"fname")}
+                        value={formData.firstName}
+                    />
+                      <TextField
+                        name="last Name"
+                        onChange={(e)=>handleChange(e,"lname")}
+                        value={formData.lastName}
+                    />
+                </FormElement>
                 </FlexLayout>
             </Modal>
         </>
