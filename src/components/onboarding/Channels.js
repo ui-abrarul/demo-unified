@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
-import { Card, FlexChild, FlexLayout, TextStyles, Modal,FormElement,TextField } from '@cedcommerce/ounce-ui'
+import { Card, FlexChild, FlexLayout, TextStyles, Modal } from '@cedcommerce/ounce-ui'
+import EtsyForm from './EtsyForm'
+import EtsySuccess from './EtsySuccess'
+import EtsySettings from './EtsySettings'
+import Thanks from './Thanks'
 
 
 const Channels = (props) => {
 
     const [connectModal, setConnectModal] = useState(false)
-    const [formData,setFormData] = useState({
-        firstName:"",
-        lastName:""
-    })
-    
-    console.log(formData)
 
-    const handleChange = (e, name) =>{
-        name=="fname" && setFormData({...formData,firstName:e})
-        name=="lname" && setFormData({...formData,lastName:e})
-        // setFormData(formData => {
-        //     return{
-        //         ...formData,
-        //         e
-        //     }
-        // })
+    const [stepOne, setStepOne] = useState(false)
+    const [stepTwo, setStepTwo] = useState(false)
+    const [stepThree, setStepThree] = useState(false)
+
+
+    const Change = () => {
+        if (!stepOne) {
+            setStepOne(true);
+        }
     }
 
     return (
@@ -92,33 +90,21 @@ const Channels = (props) => {
                 heading="Step 1/3"
                 modalSize="small"
                 primaryAction={{
-                    content: 'Proceed',
+                    content: stepOne ? "Next" : "Validate",
                     loading: false,
-                    onClick: function noRefCheck() {}
-                  }}
+                    onClick: Change
+                }}
                 secondaryAction={{
-                    content: 'Close',
+                    content: 'Cancel',
                     loading: false,
                     onClick: function noRefCheck() { setConnectModal(!connectModal) }
                 }}
             >
-                <FlexLayout direction='vertical' spacing='loose'>
-                <TextStyles content="Enter Account Details" fontweight='normal' type='SubHeading' />
-                <FormElement
-                >
-                    <TextField
-                        name="first Name"
-                        onChange={(e)=>handleChange(e,"fname")}
-                        value={formData.firstName}
-                    />
-                      <TextField
-                        name="last Name"
-                        onChange={(e)=>handleChange(e,"lname")}
-                        value={formData.lastName}
-                    />
-                </FormElement>
-                </FlexLayout>
+                {stepOne && <EtsyForm />}
+                {stepTwo && <EtsySuccess />}
+                {stepThree && <EtsySettings />}
             </Modal>
+
         </>
     )
 }

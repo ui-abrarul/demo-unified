@@ -8,8 +8,6 @@ const Onboarding = () => {
 
     const [onboardingModal, setOnboardingModal] = useState(false)
 
-
-
     return (
         <>
             <PageHeader
