@@ -1,12 +1,17 @@
 import React from 'react'
+import Thanks from '../Thanks'
 import WalmartForm from './WalmartForm'
 import WalmartSettings from './WalmartSettings'
 
-const Walmart = () => {
+const Walmart = (props) => {
+   
+    console.log(props)
+    
   return (
    <>
-   <WalmartForm/>
-   <WalmartSettings/>
+   {props.stepOne && <WalmartForm/>}
+   {props.stepTwo && <WalmartSettings/>}
+   {props.stepThree && <Thanks/>}
    </>
   )
 }

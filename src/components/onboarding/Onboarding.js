@@ -1,4 +1,4 @@
-import { FlexLayout, PageHeader, TextStyles, Button, Modal } from '@cedcommerce/ounce-ui'
+import { BodyLayout, FlexLayout, PageHeader, TextStyles, Button, Modal } from '@cedcommerce/ounce-ui'
 import React, { useState } from 'react'
 import Channels from './Channels'
 import { etsyIcon, fbIcon, googleIcon, walmartIcon, onboardingVideoIcon, onboardingFileIcon } from './ChannelIcons'
@@ -9,7 +9,7 @@ const Onboarding = () => {
     const [onboardingModal, setOnboardingModal] = useState(false)
 
     return (
-        <>
+        <BodyLayout>
             <PageHeader
                 action={<FlexLayout valign='center' spacing='tight'>
                     <Button
@@ -71,7 +71,7 @@ const Onboarding = () => {
             >
                 This is small modal
             </Modal>
-        </>
+            </BodyLayout>
     )
 }
 

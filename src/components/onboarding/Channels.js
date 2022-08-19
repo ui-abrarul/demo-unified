@@ -7,16 +7,30 @@ import Thanks from './Thanks'
 import WalmartForm from './walmart/WalmartForm'
 import WalmartSettings from './walmart/WalmartSettings'
 import Walmart from './walmart/Walmart'
+import { Link } from "react-router-dom";
+
 
 
 const Channels = (props) => {
 
     const [connectModal, setConnectModal] = useState(false)
-    const [page,setPage] = useState(0)
 
-    const [stepOne, setStepOne] = useState(false)
+    const [stepOne, setStepOne] = useState(true)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
+    const [page, setPage] = useState(1)
+
+    const handlePage = () => {
+        if (page === 1) {
+            setStepOne(false)
+            setStepTwo(true)
+            setPage(2)
+        } else {
+            setStepThree(true)
+            setStepTwo(false)
+            setPage(3)
+        }
+    }
 
 
     return (
@@ -85,30 +99,42 @@ const Channels = (props) => {
             <Modal
                 open={connectModal}
                 close={function noRefCheck() { setConnectModal(!connectModal) }}
-                heading="Step 1/3"
+                heading={`Step ${page}/3`}
                 modalSize="small"
-                primaryAction={{
-                    content: props.title === 'Etsy' ? "Validate" : "Validate And Next",
-                    loading: false,
-                    onClick: () => { }
-                }}
-                secondaryAction={{
-                    content: 'Cancel',
-                    loading: false,
-                    onClick: function noRefCheck() { setConnectModal(!connectModal) }
-                }}
+                primaryAction={
+                    stepOne && {
+                        content: "Validate And Next",
+                        loading: false,
+                        onClick: handlePage
+                    }
+                    ||
+                    stepTwo && {
+                        content: "Finish",
+                        loading: false,
+                        onClick: handlePage
+                    }
+                    ||
+                    stepThree && {
+                        content: <Link to="dashboard" style={{color: "#fff"}}>Go To Dashboard</Link>,
+                        loading: false,
+                        onClick: () => {}
+                    }
+                }
+                secondaryAction={
+                    {
+                        content: stepThree ? "Connect Another Marketplace" : 'Cancel',
+                        loading: false,
+                        onClick: function noRefCheck() { setConnectModal(!connectModal) }
+                    }
+                }
             >
-
-                {/* {stepOne && <EtsyForm />}
-                {stepTwo && <EtsySuccess />}
-                {stepThree && <EtsySettings />} */}
 
                 {props.title === 'Etsy' && <EtsyForm />}
 
-                {props.title === 'Walmart' && <Walmart/>}
-               
+                {props.title === 'Walmart' && <Walmart stepOne={stepOne} stepTwo={stepTwo} stepThree={stepThree} />}
+
                 {props.title === 'Facebook' && <WalmartForm />}
-               
+
                 {props.title === 'Google' && <WalmartForm />}
 
             </Modal>
