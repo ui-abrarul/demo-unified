@@ -4,22 +4,20 @@ import EtsyForm from './EtsyForm'
 import EtsySuccess from './EtsySuccess'
 import EtsySettings from './EtsySettings'
 import Thanks from './Thanks'
-import WalmartForm from './WalmartForm'
+import WalmartForm from './walmart/WalmartForm'
+import WalmartSettings from './walmart/WalmartSettings'
+import Walmart from './walmart/Walmart'
 
 
 const Channels = (props) => {
 
     const [connectModal, setConnectModal] = useState(false)
+    const [page,setPage] = useState(0)
 
     const [stepOne, setStepOne] = useState(false)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
 
-
-    const HandleConnect = () => {
-        setConnectModal(!connectModal)
-        setStepOne(true);
-    }
 
     return (
         <>
@@ -27,7 +25,7 @@ const Channels = (props) => {
                 primaryAction={{
                     content: 'Connect',
                     type: 'Primary',
-                    onClick: HandleConnect
+                    onClick: () => setConnectModal(!connectModal)
                 }}
                 extraClass="channel"
             >
@@ -90,7 +88,7 @@ const Channels = (props) => {
                 heading="Step 1/3"
                 modalSize="small"
                 primaryAction={{
-                    content: "Validate",
+                    content: props.title === 'Etsy' ? "Validate" : "Validate And Next",
                     loading: false,
                     onClick: () => { }
                 }}
@@ -100,16 +98,19 @@ const Channels = (props) => {
                     onClick: function noRefCheck() { setConnectModal(!connectModal) }
                 }}
             >
-                
+
                 {/* {stepOne && <EtsyForm />}
                 {stepTwo && <EtsySuccess />}
                 {stepThree && <EtsySettings />} */}
 
-                {props.title === 'Etsy' && <EtsyForm/>}
-                {props.title === 'Walmart' &&  <WalmartForm/>}
-                {props.title === 'Facebook' &&  <WalmartForm/>}
-                {props.title === 'Google' &&  <WalmartForm/>}
-                
+                {props.title === 'Etsy' && <EtsyForm />}
+
+                {props.title === 'Walmart' && <Walmart/>}
+               
+                {props.title === 'Facebook' && <WalmartForm />}
+               
+                {props.title === 'Google' && <WalmartForm />}
+
             </Modal>
 
         </>

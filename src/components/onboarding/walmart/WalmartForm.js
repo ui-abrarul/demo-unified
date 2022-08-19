@@ -53,16 +53,17 @@ const WalmartForm = () => {
                 <FlexLayout childWidth='fullWidth'>
                     {formData.map((element, i) => {
                         return (
-                            <><FormElement
-                            >
-                                <FlexLayout childWidth='fullWidth' spacing='loose'>
-                                    <TextField name='Seller Id' onChange={(e) => handleChange(e, i, 'sellerId')} value={element.sellerId} />
-                                    <TextField name='Client Id' onChange={(e) => handleChange(e, i, 'clientId')} value={element.clientId} />
-                                </FlexLayout>
-                                <FlexLayout childWidth='fullWidth'>
-                                    <TextField name='Secret Key' onChange={(e) => handleChange(e, i, 'secretKey')} value={element.secretKey} />
-                                </FlexLayout>
-                            </FormElement>
+                            <React.Fragment key={i}>
+                                <FormElement
+                                >
+                                    <FlexLayout childWidth='fullWidth' spacing='loose'>
+                                        <TextField name='Seller Id' onChange={(e) => handleChange(e, i, 'sellerId')} value={element.sellerId} />
+                                        <TextField name='Client Id' onChange={(e) => handleChange(e, i, 'clientId')} value={element.clientId} />
+                                    </FlexLayout>
+                                    <FlexLayout childWidth='fullWidth'>
+                                        <TextField name='Secret Key' onChange={(e) => handleChange(e, i, 'secretKey')} value={element.secretKey} />
+                                    </FlexLayout>
+                                </FormElement>
                                 {formData.length !== 1 && <Button
                                     halign="End"
                                     iconAlign="left"
@@ -70,11 +71,11 @@ const WalmartForm = () => {
                                     onAction={() => { }}
                                     onClick={(i) => removefields(i)}
                                     thickness="thin"
-                                    type="Plain"
+                                    type="DangerPlain"
                                 >
-                                    Remove
+                                    Delete
                                 </Button>}
-                            </>
+                            </React.Fragment>
                         )
                     })
 
@@ -90,8 +91,9 @@ const WalmartForm = () => {
                     >
                         + Connect Other Account
                     </Button>
-                </FlexLayout>
 
+                </FlexLayout>
+                {JSON.stringify(formData)}
             </FlexLayout>
         </>
     )
