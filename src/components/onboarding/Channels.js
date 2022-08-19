@@ -4,6 +4,7 @@ import EtsyForm from './EtsyForm'
 import EtsySuccess from './EtsySuccess'
 import EtsySettings from './EtsySettings'
 import Thanks from './Thanks'
+import WalmartForm from './WalmartForm'
 
 
 const Channels = (props) => {
@@ -15,10 +16,9 @@ const Channels = (props) => {
     const [stepThree, setStepThree] = useState(false)
 
 
-    const Change = () => {
-        if (!stepOne) {
-            setStepOne(true);
-        }
+    const HandleConnect = () => {
+        setConnectModal(!connectModal)
+        setStepOne(true);
     }
 
     return (
@@ -27,7 +27,7 @@ const Channels = (props) => {
                 primaryAction={{
                     content: 'Connect',
                     type: 'Primary',
-                    onClick: () => setConnectModal(!connectModal)
+                    onClick: HandleConnect
                 }}
                 extraClass="channel"
             >
@@ -90,9 +90,9 @@ const Channels = (props) => {
                 heading="Step 1/3"
                 modalSize="small"
                 primaryAction={{
-                    content: stepOne ? "Next" : "Validate",
+                    content: "Validate",
                     loading: false,
-                    onClick: Change
+                    onClick: () => { }
                 }}
                 secondaryAction={{
                     content: 'Cancel',
@@ -100,9 +100,16 @@ const Channels = (props) => {
                     onClick: function noRefCheck() { setConnectModal(!connectModal) }
                 }}
             >
-                {stepOne && <EtsyForm />}
+                
+                {/* {stepOne && <EtsyForm />}
                 {stepTwo && <EtsySuccess />}
-                {stepThree && <EtsySettings />}
+                {stepThree && <EtsySettings />} */}
+
+                {props.title === 'Etsy' && <EtsyForm/>}
+                {props.title === 'Walmart' &&  <WalmartForm/>}
+                {props.title === 'Facebook' &&  <WalmartForm/>}
+                {props.title === 'Google' &&  <WalmartForm/>}
+                
             </Modal>
 
         </>
